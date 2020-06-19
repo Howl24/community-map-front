@@ -35,7 +35,7 @@ router.afterEach(to => {
 Vue.config.productionTip = false
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyDYjf5orOiAHT_cUSn6KRwM2CUc5nOaNZQ',
+    key: 'NOTHING',
     libraries: 'places'
   }
 })
