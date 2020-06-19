@@ -31,6 +31,14 @@ export default {
             label: 'Dashboard'
           }
         ],
+        'Maps',
+        [
+          {
+            to: '/maps',
+            icon: 'desktop-mac',
+            label: 'Maps'
+          }
+        ],
         'Examples',
         [
           {

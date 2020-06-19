@@ -15,6 +15,9 @@ import './registerServiceWorker'
 /* Vue. Main component */
 import App from './App.vue'
 
+/* Vue. GoogleMaps Component */
+import * as VueGoogleMaps from 'vue2-google-maps'
+
 /* Default title tag */
 const defaultDocumentTitle = 'Admin One Bulma'
 
@@ -30,7 +33,12 @@ router.afterEach(to => {
 })
 
 Vue.config.productionTip = false
-
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyDYjf5orOiAHT_cUSn6KRwM2CUc5nOaNZQ',
+    libraries: 'places'
+  }
+})
 Vue.use(Buefy)
 
 new Vue({
