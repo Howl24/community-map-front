@@ -5,10 +5,10 @@
 </template>
 
 <script>
-import GoogleMap from "@/components/GoogleMap"
+import GoogleMap from '@/components/GoogleMap'
 
 export default {
-  name: "Maps",
+  name: 'Maps',
   components: {
     GoogleMap
   }
