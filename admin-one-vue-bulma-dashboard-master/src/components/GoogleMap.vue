@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'GoogleMap',
   data () {
@@ -60,6 +61,21 @@ export default {
         this.places.push(this.currentPlace)
         this.center = marker
         this.currentPlace = null
+      } else {
+        axios
+          .get('https://private-e84412-communitymap.apiary-mock.com/place')
+          .then((response) => {
+            response.data.forEach(element => {
+              const marker = {
+                lat: parseFloat(element.latitude),
+                lng: parseFloat(element.longitude)
+              }
+              var image = '../../assets/test.png'
+              this.markers.push({ position: marker, icon: image })
+              this.places.push(this.currentPlace)
+            })
+          })
+          .catch(error => console.log(error))
       }
     },
     geolocate: function () {
