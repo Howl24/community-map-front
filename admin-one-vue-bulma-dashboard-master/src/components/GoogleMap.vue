@@ -15,12 +15,12 @@
     <gmap-map
       :center="center"
       :zoom="12"
-      style="width:100%;  height: 600px;"
-    >
+      style="width:100%;  height: 600px;">
       <gmap-marker
         :key="index"
         v-for="(m, index) in markers"
         :position="m.position"
+        :icon="m.icon"
         @click="center=m.position"
       ></gmap-marker>
     </gmap-map>
@@ -57,8 +57,7 @@ export default {
           lat: this.currentPlace.geometry.location.lat(),
           lng: this.currentPlace.geometry.location.lng()
         }
-        this.markers.push({ position: marker })
-        this.places.push(this.currentPlace)
+        this.zoom = '12'
         this.center = marker
         this.currentPlace = null
       } else {
@@ -70,7 +69,7 @@ export default {
                 lat: parseFloat(element.latitude),
                 lng: parseFloat(element.longitude)
               }
-              var image = '../../assets/test.png'
+              var image = element.category.icon
               this.markers.push({ position: marker, icon: image })
               this.places.push(this.currentPlace)
             })
