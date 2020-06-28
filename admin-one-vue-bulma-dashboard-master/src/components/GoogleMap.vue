@@ -1,12 +1,13 @@
 <template>
   <div>
     <div>
-      <h2>Search and add a pin</h2>
+      <h2>Busque el lugar</h2>
       <label>
         <gmap-autocomplete
-          @place_changed="setPlace">
+          @place_changed="setPlace"
+          style="width: 600px;">
         </gmap-autocomplete>
-        <button @click="addMarker">Add</button>
+        <button @click="addMarker">Buscar</button>
       </label>
       <br/>
 
@@ -14,21 +15,34 @@
     <br>
     <gmap-map
       :center="center"
-      :zoom="12"
+      :zoom="zoom"
       style="width:100%;  height: 600px;">
       <gmap-marker
         :key="index"
         v-for="(m, index) in markers"
         :position="m.position"
         :icon="m.icon"
-        @click="center=m.position"
+        :title="m.title"
+        @click="clickMarker(m)"
       ></gmap-marker>
+      <gmap-info-window
+        @closeclick="window_open=false"
+        :opened="window_open"
+        :options="{
+          pixelOffset: {
+            width: 0,
+            height: -35
+          }
+        }"
+        :position="infowindow">
+        {{description}}
+      </gmap-info-window>
     </gmap-map>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import PlacesRepository from '@/services/PlacesRepository'
 export default {
   name: 'GoogleMap',
   data () {
@@ -38,12 +52,29 @@ export default {
       center: { lat: 45.508, lng: -73.587 },
       markers: [],
       places: [],
-      currentPlace: null
+      zoom: 15,
+      currentPlace: null,
+      infowindow: { lat: 10, lng: 10.0 },
+      window_open: false,
+      description: 'Hello World'
     }
   },
 
   mounted () {
     this.geolocate()
+    PlacesRepository.getAllPlaces()
+      .then((response) => {
+        response.data.forEach(element => {
+          const marker = {
+            lat: parseFloat(element.latitude),
+            lng: parseFloat(element.longitude)
+          }
+          var image = element.category.icon
+          this.markers.push({ position: marker, icon: image, title: element.description })
+          this.places.push(this.currentPlace)
+        })
+      })
+      .catch(error => console.log(error))
   },
 
   methods: {
@@ -51,30 +82,24 @@ export default {
     setPlace (place) {
       this.currentPlace = place
     },
+    openWindow () {
+      this.window_open = true
+    },
+    clickMarker (marker) {
+      this.center = marker.position
+      this.window_open = true
+      this.infowindow = { lat: marker.position.lat, lng: marker.position.lng }
+      this.description = marker.title
+    },
     addMarker () {
       if (this.currentPlace) {
         const marker = {
           lat: this.currentPlace.geometry.location.lat(),
           lng: this.currentPlace.geometry.location.lng()
         }
-        this.zoom = '12'
         this.center = marker
+        this.zoom = 15
         this.currentPlace = null
-      } else {
-        axios
-          .get('https://private-e84412-communitymap.apiary-mock.com/place')
-          .then((response) => {
-            response.data.forEach(element => {
-              const marker = {
-                lat: parseFloat(element.latitude),
-                lng: parseFloat(element.longitude)
-              }
-              var image = element.category.icon
-              this.markers.push({ position: marker, icon: image })
-              this.places.push(this.currentPlace)
-            })
-          })
-          .catch(error => console.log(error))
       }
     },
     geolocate: function () {
