@@ -1,12 +1,14 @@
-import axios from 'axios'
+import Repository from './Repository'
 
 const PlaceRepository = {
   getAllPlaces () {
-    var proxy = axios.create({
-      baseURL: 'https://j7uxqs7ive.execute-api.us-east-1.amazonaws.com/dev/api/v1/'
-    })
-    return proxy.get(
+    return Repository.public().get(
       'core/place/'
+    )
+  },
+  getAllCategories () {
+    return Repository.public().get(
+      'core/category/'
     )
   }
 }

@@ -62,17 +62,27 @@ export default {
 
   mounted () {
     this.geolocate()
-    PlacesRepository.getAllPlaces()
+    PlacesRepository.getAllCategories()
       .then((response) => {
-        response.data.forEach(element => {
-          const marker = {
-            lat: parseFloat(element.latitude),
-            lng: parseFloat(element.longitude)
-          }
-          var image = element.category.icon
-          this.markers.push({ position: marker, icon: image, title: element.description })
-          this.places.push(this.currentPlace)
-        })
+        const category = response.data
+        PlacesRepository.getAllPlaces()
+          .then((response) => {
+            response.data.forEach(element => {
+              const marker = {
+                lat: parseFloat(element.latitude),
+                lng: parseFloat(element.longitude)
+              }
+              var cat = category.find(a => a.id === element.category)
+              var image = cat.icon
+              if (cat.id === '3dfb4b82-f5a8-4678-a124-0260e23c62b7') {
+                console.log(cat)
+                console.log(marker)
+              }
+              this.markers.push({ position: marker, icon: image, title: element.description })
+              this.places.push(this.currentPlace)
+            })
+          })
+          .catch(error => console.log(error))
       })
       .catch(error => console.log(error))
   },
@@ -87,7 +97,7 @@ export default {
     },
     clickMarker (marker) {
       this.center = marker.position
-      this.window_open = true
+      this.openWindow()
       this.infowindow = { lat: marker.position.lat, lng: marker.position.lng }
       this.description = marker.title
     },

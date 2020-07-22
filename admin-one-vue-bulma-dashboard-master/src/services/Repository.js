@@ -1,14 +1,12 @@
 import axios from 'axios'
 
 const config = {
-  baseUrl: 'https://j7uxqs7ive.execute-api.us-east-1.amazonaws.com/dev/api/v1/'
+  baseURL: 'https://j7uxqs7ive.execute-api.us-east-1.amazonaws.com/dev/api/v1/'
 }
 
 const Repository = {
   public () {
-    return axios.create({
-      baseUrl: 'https://j7uxqs7ive.execute-api.us-east-1.amazonaws.com/dev/api/v1/'
-    })
+    return axios.create(config)
   },
   private () {
     config.headers = {
