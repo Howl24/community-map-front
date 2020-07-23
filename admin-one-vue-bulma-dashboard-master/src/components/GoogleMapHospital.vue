@@ -65,7 +65,7 @@ export default {
     PlacesRepository.getAllCategories()
       .then((response) => {
         const category = response.data
-        PlacesRepository.getAllPlaces()
+        PlacesRepository.getPlacesByCategoryHospital()
           .then((response) => {
             response.data.forEach(element => {
               const marker = {
@@ -74,10 +74,6 @@ export default {
               }
               var cat = category.find(a => a.id === element.category)
               var image = cat.icon
-              if (cat.id === '3dfb4b82-f5a8-4678-a124-0260e23c62b7') {
-                console.log(cat)
-                console.log(marker)
-              }
               this.markers.push({ position: marker, icon: image, title: element.description })
               this.places.push(this.currentPlace)
             })

@@ -28,6 +28,30 @@ const routes = [
   },
   {
     meta: {
+      title: 'Maps'
+    },
+    path: '/hospital',
+    name: 'hospital',
+    component: () => import(/* webpackChunkName: "tables" */ '../components/GoogleMapHospital.vue')
+  },
+  {
+    meta: {
+      title: 'Maps'
+    },
+    path: '/school',
+    name: 'colegio',
+    component: () => import(/* webpackChunkName: "tables" */ '../components/GoogleMapSchool.vue')
+  },
+  {
+    meta: {
+      title: 'Maps'
+    },
+    path: '/parroquias',
+    name: 'parroquias',
+    component: () => import(/* webpackChunkName: "tables" */ '../components/GoogleMapChurch.vue')
+  },
+  {
+    meta: {
       title: 'Tables'
     },
     path: '/tables',
