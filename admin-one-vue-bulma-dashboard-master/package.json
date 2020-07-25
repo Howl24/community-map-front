@@ -5,9 +5,10 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "deploy": "vue-cli-service s3-deploy",
     "build:gh-pages": "cross-env DEPLOY_ENV=GH_PAGES vue-cli-service build --modern",
-    "deploy:gh-pages": "cross-env NODE_DEBUG=gh-pages gh-pages -d dist -t",
-    "lint": "vue-cli-service lint"
+    "deploy:gh-pages": "cross-env NODE_DEBUG=gh-pages gh-pages -d dist -t"
   },
   "dependencies": {
     "axios": "^0.19.2",
@@ -21,6 +22,7 @@
     "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",
     "vue-chartjs": "^3.5.0",
+    "vue-cli-plugin-s3-deploy": "^4.0.0-rc3",
     "vue-router": "^3.3.2",
     "vue2-google-maps": "^0.10.7",
     "vuex": "^3.4.0"
