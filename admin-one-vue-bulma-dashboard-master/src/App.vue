@@ -27,12 +27,12 @@ export default {
           {
             to: '/hospital',
             icon: 'table',
-            label: 'Hospitales'
+            label: 'E. de Salud'
           },
           {
             to: '/school',
             icon: 'table',
-            label: 'Colegios'
+            label: 'Colegios Públicos'
           },
           {
             to: '/parroquias',
